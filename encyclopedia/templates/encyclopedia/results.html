@@ -1,0 +1,45 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia | Search Results
+{% endblock %}
+
+
+
+{% block body %}
+
+<style>
+
+    a, li {
+        text-decoration: none !important;
+    }
+
+    li {
+        transition: all 250ms ease-in-out;
+        width: 350px;
+    }
+
+    li:hover {
+        background: #007BFF;
+        color: #fff;
+    }
+
+</style>         
+
+    {% if contains %}
+        <h1>Results containing '{{ query }}'</h1>
+    {% else %}
+        <h1>No results containing '{{ query }}'</h1>
+        <p> - All Entries</p>
+    {% endif %}
+    
+    <ul class="list-group list-group-flush">
+        
+        {% for entry in results %}
+    
+            <a href="{% url 'entry' entry %}"><li class="list-group-item">{{ entry }}</li></a>
+            
+        {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit 
+{% endblock %}
+
+{% block body %}
+    <h1>Edit {{ title }} entry</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div id="message" class="container">
+                <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                        <strong>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                            Error: 
+                        {% else %}
+                            {{ message.tags|title }}
+                        {% endif %}
+                        </strong>
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'edit' title %}" class="col-md-6" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control" value="{{ title }}">
+        </div>
+
+        <div class="form-group">
+            <label for="content" >Content</label>
+            <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{ markdown }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-info">Submit</button>
+
+    </form>
+
+{% endblock %}
